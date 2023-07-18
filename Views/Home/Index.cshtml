@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome GitHub!!</h1>
+    @Html.Partial("Partail1")
+    @Html.Partial("Partail2")
+   
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <table id="employeesTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>年資</th>
+                <th>薪水</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{ 
+     <script>
+        //JSON 
+        // [value, value, value] {"key":value, "key":value}
+        // [{"key":value, "key":value}, {"key":value, "key":value}]
+        // {"key":[value, value, value]}
+
+        //const datas = ["a","b","c"];
+        //console.log(datas[1]);  //b
+        //const data = {"name":"Jack","age":30};
+        //console.log(data.name)
+
+        const emps = [{ "name": "Tom", "workYears": 3, "salary": 35000 },
+        { "name": "Jack", "workYears": 5, "salary": 40000 },
+        { "name": "Mary", "workYears": 7, "salary": 45000 }];
+
+        //console.log(emps.length)
+
+        //emps => array
+      // console.log(emps[2]); //{ "name": "Mary", "workYears": 7, "salary": 45000 }
+        //emps[2] => object
+       // console.log(emps[2].salary);
+
+       //for(let i=0,max=emps.length;i<max;i++){
+       //     console.log(emps[i].name)
+       //     console.log(emps[i].workYears)
+       //     console.log(emps[i].salary)
+       //}
+
+        const emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+        //console.log(emp.employees.length)
+        //console.log(emp.employees[1])
+        //console.log(emp.employees[1].name)
+        //for(let i=0,max=emp.employees.length;i<max;i++){
+        //    //解構賦值 Destructuring Assignment
+        //    const {name, workYears, salary } = emp.employees[i];
+
+        //    console.log(name)
+        //    console.log(workYears)
+        //    console.log(salary)
+        //}
+
+        //emp.employees.forEach((theEmp,idx, datas)=>{
+        //    console.log(idx)
+        //    console.log(theEmp)
+        //    console.log(datas)
+
+        //})
+        //let datas = ""
+        //emp.employees.forEach(theEmp => {
+        //    const { name, workYears, salary } = theEmp;
+        //    const data = `
+        //       <tr>
+        //         <td>${name}</td>
+        //         <td>${workYears}</td>
+        //         <td>${salary}</td>
+        //       </tr>
+        //       `;
+
+        //  datas += data;
+
+        //})
+        //document.querySelector('#employeesTable>tbody').innerHTML = datas;
+
+       const datas =  emp.employees.map(theEmp =>{
+            const { name, workYears, salary } = theEmp;
+            return(
+                `<tr>
+                  <td>${name}</td>
+                  <td>${workYears}</td>
+                  <td>${salary}</td>
+                  </tr>
+                `
+            )
+       })
+        document.querySelector('#employeesTable>tbody').innerHTML = datas.join("");
+       
+     
+        //const items = ["a","b","c"];
+        //console.log(items.join("")); //a--b--c abc
+    </script>
+}
+
+@section Styles{
+    <style>
+        h1 {
+            background-color: lightgreen
+        }
+    </style>
+}

@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "Promise";
+}
+
+<h1>Promise</h1>
+
+@section Scripts{
+    <script>
+        //setTimeout(function () {
+        //    console.log('A');
+        //}, 1000);
+        //setTimeout(function () {
+        //    console.log('B');
+        //}, 1000);
+        //setTimeout(function () {
+        //    console.log('C');
+        //}, 1000);
+
+        //A、B、C
+
+        //setTimeout(function () {
+        //    console.log('A');
+        //}, 3000);
+        //setTimeout(function () {
+        //    console.log('B');
+        //}, 2000);
+        //setTimeout(function () {
+        //    console.log('C');
+        //}, 1000);
+
+        //setTimeout(function () {
+        //    console.log('A');
+        //    setTimeout(function () {
+        //        console.log('B');
+        //        setTimeout(function () {
+        //            console.log('C');
+        //        }, 1000);
+        //    }, 1000);
+        //}, 1000);
+
+        //建立 Promise 物件
+        const promise = new Promise(function(resolve,reject){
+          //這裡就是放一些非同步的程式碼
+          //new XMLHttpRequest()
+          const num = Math.random() > 0.5 ? 1 : 0;
+          console.log(num);
+          if(num){
+              resolve("成功");
+          }else{
+              reject("失敗");
+          }
+        })
+
+        //使用 Promise
+        promise.then(result=>{
+            console.log(result);
+        }).catch(error => {
+            console.log(error);
+        }).finally(()=>{
+            console.log("finally")
+        });
+
+
+    </script>
+
+}
+

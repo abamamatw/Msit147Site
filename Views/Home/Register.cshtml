@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Regiser</h1>
+<div class="row">
+    <div class="col-3">
+        <a href="~/home/index" id="linkPage">Index Page</a>
+    </div>
+    <div class="col-6">
+        <form method="Post" action="~/api/register" name="registerForm">
+            <div class="mb-3">
+                <label for="InputUserName" class="form-label">姓名</label>
+                <input type="text" class="form-control" id="InputUserName" name="Name" />
+                <div id="nameHelp" class="form-text"></div>
+            </div>
+            <div class="mb-3">
+                <label for="InputEmail" class="form-label">電子郵件</label>
+                <input type="email" class="form-control" id="InputEmail" name="Email" />              
+            </div>
+            <div class="mb-3">
+                <label for="InputAge" class="form-label">年紀</label>
+                <input type="number" class="form-control" id="InputAge" name="Age">
+            </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">選擇檔案</label>
+                <input class="form-control" type="file" id="formFile" name="Photo">
+            </div>
+            <button class="btn btn-primary" id="buttonSubmit">Submit</button>
+        </form>
+        <div id="div1" class="alert alert-secondary mt-3"><img src="c:\users\user\documents\ajax\msit147site\wwwroot\uploads" /></div>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+@section Scripts{
+    <script>
+        const btnSubmit = document.querySelector('#buttonSubmit');
+        const page = document.querySelector('#linkPage');
+        const divAlert = document.querySelector('#div1');
+        btnSubmit.addEventListener('click', async(event)=>{           
+            event.preventDefault();
+
+            const formData = new FormData(document.registerForm);//<form name="registerForm"
+
+            //fetch + async await 
+            const response = await fetch('@Url.Content("~/api/register")', {
+                body: formData,
+                method: 'POST'
+            });
+            const data = await response.text();
+            divAlert.innerHTML = data;
+
+              //fetch 
+            //fetch('@Url.Content("~/api/register")',{
+            //    body: formData,
+            //    method: 'POST'
+            //})
+            //.then(response =>response.text())
+            //.then(data => {
+            //        divAlert.innerHTML = data;
+            //})
+           
+
+
+           // const xhr = new XMLHttpRequest();
+           // xhr.open('POST', '/api/register');
+           ////xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+           //// xhr.send('Name=Mary&Age=30&Email=Mary@company.com');
+           //// xhr.send(`Name=${document.querySelector('#InputUserName').value}&Age=${document.querySelector('#InputAge')}&Email=Mary@company.com`);
+           //xhr.send(formData);
+
+           // xhr.addEventListener('load',()=>{
+           //     const data = xhr.responseText;
+           //     divAlert.innerHTML = data;
+           // })
+                            
+        })
+
+        page.addEventListener('click',event=>{
+            if (!window.confirm("真的要去??")) {
+                event.preventDefault();
+                console.log('page');
+            }
+        })
+
+
+    </script>
+}
+
+@section Styles{
+    <style></style>
+}

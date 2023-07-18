@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "AjaxEvent";
+}
+
+<h1>AjaxEvent</h1>
+<input type="text" id="userName" />
+<button id="ajaxStart" class="btn btn-primary">Ajax Start</button>
+<button id="ajaxStop" class="btn btn-warning">Ajax Stop</button>
+<img id="img1" src="~/images/skateboarding.gif" />
+<div id="div1" class="alert alert-secondary mt-3"></div>
+
+@section Scripts{
+    <script>
+        const btnStart = document.querySelector('#ajaxStart');
+        const btnStop = document.querySelector('#ajaxStop');
+        const divAlert  = document.querySelector('#div1');
+        const txtName = document.querySelector('#userName');
+        const theImg = document.querySelector('#img1');
+
+        //step1 建立Ajax物件
+        const xhr = new XMLHttpRequest();
+
+        //ajax 開始
+        xhr.addEventListener('loadstart',()=>{
+            divAlert.innerHTML += "Ajax開始<br>";
+            theImg.style.display = "inline";
+            btnStart.setAttribute('disabled','disabled');
+            btnStart.innerHTML = "執行中....";
+        })
+
+        //ajax 結束
+        xhr.addEventListener('loadend',()=>{
+            divAlert.innerHTML += "Ajax結束<br>";
+            theImg.style.display = "none";
+            btnStart.removeAttribute('disabled');
+            btnStart.innerHTML = "Ajax Start";
+        })
+
+        //step3 接收回應(response)的資料
+        xhr.addEventListener('load', () => {
+            const data = xhr.responseText;
+            divAlert.innerHTML += data + "<br>";
+        })
+
+        //timeout 時間到了，Server端還沒有回傳結果
+        xhr.addEventListener('timeout',()=>{
+            divAlert.innerHTML += "伺服器忙碌中...<br>";
+        })
+
+        //透過abort()停止了Ajax程式的執行
+        xhr.addEventListener('abort',()=>{
+            divAlert.innerHTML += "您停止了程式的執行...<br>";
+        })
+
+        btnStart.addEventListener('click',()=>{           
+            //step2 發出要求(request)
+            xhr.open('GET', `/api/ajaxevent?userName=${txtName.value}&age=30&email=xxx@company.com`);
+            xhr.timeout = 5000;
+            xhr.send();
+            
+        })
+
+        btnStop.addEventListener('click',()=>{
+           // divAlert.innerHTML = "Ajax Stop!!";
+           xhr.abort();
+        })
+    </script>
+
+}
+
+@section Styles{
+    <style>
+        #img1 {
+            display: none;
+        }
+    </style>
+   
+}

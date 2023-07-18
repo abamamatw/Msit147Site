@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "First";
+}
+
+<h1>First</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年資</th>
+            <th>薪水</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        const emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+        var datas = $.map(emp.employees,function(item){
+            return (`<tr>
+                    <td>${item.name}</td>
+                            <td>${item.workYears}</td>
+                            <td>${item.salary}</td>
+                </tr>`)
+        })
+        $("tbody").html(datas.join(","))
+    </script>
+
+}
+
+
+
